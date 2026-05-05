@@ -2,6 +2,8 @@
 #include <string.h>
 #include <stdlib.h>
 
+// step - 1 ()
+
 // Structure (Blueprint of one record)
 struct Dorm
 {
@@ -13,9 +15,9 @@ struct Dorm
 };
 
 // Array of structures (acts like database)
-struct Dorm d[100];
+struct Dorm d[100];//array of structures. this array contains 100 structure instances as its element. 
 
-// Count variable (tracks number of records)
+// Count variable (tracks number of students entered)
 int count = 0;
 
 // step -2 (Login system)
@@ -46,6 +48,49 @@ void login()
     */
 }
 
+// step - 4
+
+/* Goal ->
+Let the user:
+
+enter student info
+store it in the array of structure
+increase count
+
+Basically: “save new record”
+
+What does your add() function do? => “It takes user input and stores it into an array of structures, which acts as a temporary database.”
+
+Step 1 → create database
+Step 4 → insert data into database
+*/
+
+void add()
+{
+    printf("\n--- Add Student ---\n");
+
+//  d[count]  Means: “store data in next empty slot”
+// If count = 0 → goes to d[0]
+// If count = 1 → goes to d[1]
+
+    printf("Enter Student ID: ");
+    scanf("%d", &d[count].studentID);
+    printf("Enter Student Name: ");
+    scanf("%s", d[count].name);
+    printf("Enter Room Number: ");
+    scanf("%d", &d[count].roomNumber);
+    printf("Enter Check In Date: ");
+    scanf("%s", d[count].checkInDate);
+    printf("Enter Payment Status: ");
+    scanf("%s", d[count].paymentStatus);
+
+    count++; // 'count' tracks how many records are currently stored and ensures new data is added to the correct index in the array. the value of 'count' inceases by 1, everytime the 'add()' function is called. 
+
+    printf("\nStudent added successfully!\n");
+}
+
+
+//main function
 int main()
 {
     int choice;
@@ -54,7 +99,7 @@ int main()
 
     // step -3 (Menu System)
 
-    //keeps running and lets the user choose actions
+    // keeps running and lets the user choose actions
 
     printf("\n====== Dorm Room Management System ======\n");
     printf("Enter 1 to add students\n");
@@ -72,27 +117,27 @@ int main()
         switch (choice)
         {
         case 1:
-            printf("Add funtion called\n");//text placeholder for now, real function will be added later.
+            add();//step - 4, calling the add function. 
             break;
         case 2:
-            printf("View funtion called\n");//text placeholder for now, real function will be added later.
+            printf("View funtion called\n"); // text placeholder for now, real function will be added later.
             break;
         case 3:
-            printf("Search funtion called\n");//text placeholder for now, real function will be added later.
+            printf("Search funtion called\n"); // text placeholder for now, real function will be added later.
             break;
         case 4:
-            printf("Edit funtion called\n");//text placeholder for now, real function will be added later.
+            printf("Edit funtion called\n"); // text placeholder for now, real function will be added later.
             break;
         case 5:
-            printf("Delete funtion called\n");//text placeholder for now, real function will be added later.
+            printf("Delete funtion called\n"); // text placeholder for now, real function will be added later.
             break;
         case 0:
-            printf("Exiting the program\n");//text placeholder for now, real function will be added later.
+            printf("Exiting the program\n"); // text placeholder for now, real function will be added later.
             break;
         default:
             printf("Invalid choice! pls choose anything from 0-5\n");
         }
-    }while(choice != 0);//keep showing menu until user chooses exit
+    } while (choice != 0); // keep showing menu until user chooses exit
 
     return 0;
 }
