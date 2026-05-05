@@ -86,19 +86,22 @@ void add()
 
     count++; // 'count' tracks how many records are currently stored and ensures new data is added to the correct index in the array. the value of 'count' increases by 1 from its current value, everytime the 'add()' function is called.
 
-    //for the the first student array index(d[count==0].whatever) is 0 but count is 1, that means its going to be stored at index 0 as the first element of the array of structres and the 2nd student is going to be stored in the at index z as the second element. here index and count are different. right from the first student count gets updated to 0. 
+    // for the the first student array index(d[count==0].whatever) is 0 but count is 1, that means its going to be stored at index 0 as the first element of the array of structres and the 2nd student is going to be stored in the at index z as the second element. here index and count are different. right from the first student count gets updated to 0.
 
+    printf("\nStudent added successfully!\n");
 }
 
 // step -5 (view function)
+
 // this function is used for displaying the entered student's information. this will take place if the user takes the 2nd choice. it will show the information of the students that are on the record from the database (array of structure).
 void view()
 {
     printf("\n--- View Student Records ---\n");
 
-    if(count==0){
+    if (count == 0)
+    {
         printf("\nNo student has been recorded yet! Database is currently Empty! pls Enter a student first.\n");
-        return;//if no student is enterd yet then show this.
+        return; // if no student is enterd yet then show this.
     }
     for (int i = 0; i < count; i++)
     {
@@ -112,6 +115,55 @@ void view()
 
         printf("\n");
     }
+}
+
+// step - 6.A (Search funtion)
+
+void search()
+{
+    char searchingKeyword[20];
+
+    printf("Enter the name or part of the name you want to find : ");
+    scanf("%s", searchingKeyword);
+
+    printf("\n--- Search Results ---\n");
+    for (int i = 0; i < count; i++)
+    {
+        if (strstr(d[i].name, searchingKeyword) != NULL)
+        {
+            printf("Record For Student - %d\n", i + 1);
+            printf("Name : %s\n", d[i].name);
+            printf("Student ID : %d\n", d[i].studentID);
+            printf("Room Number : %d\n", d[i].roomNumber);
+            printf("Check-In Date : %s\n", d[i].checkInDate);
+            printf("Payment Status : %s\n", d[i].paymentStatus);
+
+            printf("\n");
+        }
+        else
+        {
+            printf("Sorry! No matching records found w such name.\n");
+        }
+    }
+    /*
+//strstr() (THE STAR OF THIS STEP)
+strstr(d[i].name, searchingKeyword)
+Means:“Does this name contain the search text(searchingKeyword)?”
+
+Example:
+Name = "lokman"
+searchingKeyword = "man"
+strstr() finds "man" inside "lokman" → TRUE
+
+If not found:
+strstr(...) == NULL, means no match
+
+note : strstr() is case sensitive.
+
+If they ask:“How did you implement partial search?”
+
+You say:“Using strstr() to check if the search key exists as a substring within the stored names.”
+    */
 }
 
 // main function
@@ -147,7 +199,7 @@ int main()
             view(); // step - 5, calling the view function.
             break;
         case 3:
-            printf("Search funtion called\n"); // text placeholder for now, real function will be added later.
+            search(); // step - 6.A, calling the search function.
             break;
         case 4:
             printf("Edit funtion called\n"); // text placeholder for now, real function will be added later.
