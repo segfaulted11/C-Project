@@ -122,6 +122,7 @@ void view()
 void search()
 {
     char searchingKeyword[20];
+    int found = 0;
 
     printf("Enter the name or part of the name you want to find : ");
     scanf("%s", searchingKeyword);
@@ -131,6 +132,8 @@ void search()
     {
         if (strstr(d[i].name, searchingKeyword) != NULL)
         {
+            found = 1;
+
             printf("Record For Student - %d\n", i + 1);
             printf("Name : %s\n", d[i].name);
             printf("Student ID : %d\n", d[i].studentID);
@@ -140,10 +143,10 @@ void search()
 
             printf("\n");
         }
-        else
-        {
-            printf("Sorry! No matching records found w such name.\n");
-        }
+    }
+    if (!found)
+    {
+        printf("Sorry! No matching records found w such name.\n");
     }
     /*
 //strstr() (THE STAR OF THIS STEP)
@@ -164,6 +167,57 @@ If they ask:“How did you implement partial search?”
 
 You say:“Using strstr() to check if the search key exists as a substring within the stored names.”
     */
+}
+
+// step - 6.A (Edit funtion)
+void editRecord()
+{
+    char searchingKeyword[20];
+    int found = 0;
+
+    printf("Enter the name or part of the name you want to find for editing : ");
+    scanf("%s", searchingKeyword);
+
+    printf("\n--- Search Results ---\n");
+    for (int i = 0; i < count; i++)
+    {
+        if (strstr(d[i].name, searchingKeyword) != NULL)
+        {
+            printf("Record For Student - %d\n", i + 1);
+            printf("Name : %s\n", d[i].name);
+            printf("Student ID : %d\n", d[i].studentID);
+            printf("Room Number : %d\n", d[i].roomNumber);
+            printf("Check-In Date : %s\n", d[i].checkInDate);
+            printf("Payment Status : %s\n", d[i].paymentStatus);
+
+            // take input again
+            printf("\n--- Enter New Data ---\n");
+
+            printf("Enter new name: ");
+            scanf("%s", d[i].name);
+
+            printf("Enter new student ID: ");
+            scanf("%d", &d[i].studentID);
+
+            printf("Enter new room number: ");
+            scanf("%d", &d[i].roomNumber);
+
+            printf("Enter new check-in date: ");
+            scanf("%s", d[i].checkInDate);
+
+            printf("Enter new payment status: ");
+            scanf("%s", d[i].paymentStatus);
+
+            printf("\nRecord updated successfully!\n\n");
+
+            found = 1;
+            printf("\n");
+        }
+    }
+    if (found = 0)
+    {
+        printf("Sorry! No matching records found w such name.\n");
+    }
 }
 
 // main function
@@ -202,13 +256,13 @@ int main()
             search(); // step - 6.A, calling the search function.
             break;
         case 4:
-            printf("Edit funtion called\n"); // text placeholder for now, real function will be added later.
+            editRecord(); // step - 6.B, calling the editRecord function
             break;
         case 5:
             printf("Delete funtion called\n"); // text placeholder for now, real function will be added later.
             break;
         case 0:
-            printf("Exiting the program\n"); // text placeholder for now, real function will be added later.
+            printf("Exiting the program.....\n");
             break;
         default:
             printf("Invalid choice! pls choose anything from 0-5\n");
