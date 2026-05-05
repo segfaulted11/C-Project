@@ -15,9 +15,9 @@ struct Dorm
 };
 
 // Array of structures (acts like database)
-struct Dorm d[100];//array of structures. this array contains 100 structure instances as its element. 
+struct Dorm d[100]; // array of structures. this array contains 100 structure instances as its element.
 
-// Count variable (tracks number of students entered)
+// Count variable (tracks number of entered students)
 int count = 0;
 
 // step -2 (Login system)
@@ -48,7 +48,7 @@ void login()
     */
 }
 
-// step - 4
+// step - 4 (add function)
 
 /* Goal ->
 Let the user:
@@ -69,9 +69,9 @@ void add()
 {
     printf("\n--- Add Student ---\n");
 
-//  d[count]  Means: “store data in next empty slot”
-// If count = 0 → goes to d[0]
-// If count = 1 → goes to d[1]
+    //  d[count]  Means: “store data in next empty slot”
+    // If count = 0 → goes to d[0]
+    // If count = 1 → goes to d[1]
 
     printf("Enter Student ID: ");
     scanf("%d", &d[count].studentID);
@@ -84,13 +84,37 @@ void add()
     printf("Enter Payment Status: ");
     scanf("%s", d[count].paymentStatus);
 
-    count++; // 'count' tracks how many records are currently stored and ensures new data is added to the correct index in the array. the value of 'count' inceases by 1, everytime the 'add()' function is called. 
+    count++; // 'count' tracks how many records are currently stored and ensures new data is added to the correct index in the array. the value of 'count' increases by 1 from its current value, everytime the 'add()' function is called.
 
-    printf("\nStudent added successfully!\n");
+    //for the the first student array index(d[count==0].whatever) is 0 but count is 1, that means its going to be stored at index 0 as the first element of the array of structres and the 2nd student is going to be stored in the at index z as the second element. here index and count are different. right from the first student count gets updated to 0. 
+
 }
 
+// step -5 (view function)
+// this function is used for displaying the entered student's information. this will take place if the user takes the 2nd choice. it will show the information of the students that are on the record from the database (array of structure).
+void view()
+{
+    printf("\n--- View Student Records ---\n");
 
-//main function
+    if(count==0){
+        printf("\nNo student has been recorded yet! Database is currently Empty! pls Enter a student first.\n");
+        return;//if no student is enterd yet then show this.
+    }
+    for (int i = 0; i < count; i++)
+    {
+
+        printf("Record For Student - %d\n", i + 1);
+        printf("Name : %s\n", d[i].name);
+        printf("Student ID : %d\n", d[i].studentID);
+        printf("Room Number : %d\n", d[i].roomNumber);
+        printf("Check-In Date : %s\n", d[i].checkInDate);
+        printf("Payment Status : %s\n", d[i].paymentStatus);
+
+        printf("\n");
+    }
+}
+
+// main function
 int main()
 {
     int choice;
@@ -117,10 +141,10 @@ int main()
         switch (choice)
         {
         case 1:
-            add();//step - 4, calling the add function. 
+            add(); // step - 4, calling the add function.
             break;
         case 2:
-            printf("View funtion called\n"); // text placeholder for now, real function will be added later.
+            view(); // step - 5, calling the view function.
             break;
         case 3:
             printf("Search funtion called\n"); // text placeholder for now, real function will be added later.
