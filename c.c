@@ -18,18 +18,22 @@ struct Dorm d[100];
 // Count variable (tracks number of records)
 int count = 0;
 
-//step -2 (Login system)
-void login(){
+// step -2 (Login system)
+void login()
+{
     char userName[20];
     char passWord[20];
     printf("Enter your Username : ");
-    scanf("%s",userName);
+    scanf("%s", userName);
     printf("Enter your password : ");
-    scanf("%s",passWord);
+    scanf("%s", passWord);
 
-    if(strcmp(userName,"admin")==0 && strcmp(passWord,"12345")==0){
+    if (strcmp(userName, "a") == 0 && strcmp(passWord, "23") == 0)
+    {
         printf("Log In Succesful!\n");
-    }else{
+    }
+    else
+    {
         printf("Log In failed\n");
         printf("Exiting program...\n");
         exit(0);
@@ -44,7 +48,51 @@ void login(){
 
 int main()
 {
-    login();
-    printf("Dorm Room Management System!\n");
+    int choice;
+
+    login(); // step-2
+
+    // step -3 (Menu System)
+
+    //keeps running and lets the user choose actions
+
+    printf("\n====== Dorm Room Management System ======\n");
+    printf("Enter 1 to add students\n");
+    printf("Enter 2 to view students\n");
+    printf("Enter 3 to search students\n");
+    printf("Enter 4 to edit students\n");
+    printf("Enter 5 to delete students\n");
+    printf("Enter 6 to exit\n");
+    do
+    {
+
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice)
+        {
+        case 1:
+            printf("Add funtion called\n");//text placeholder for now, real function will be added later.
+            break;
+        case 2:
+            printf("View funtion called\n");//text placeholder for now, real function will be added later.
+            break;
+        case 3:
+            printf("Search funtion called\n");//text placeholder for now, real function will be added later.
+            break;
+        case 4:
+            printf("Edit funtion called\n");//text placeholder for now, real function will be added later.
+            break;
+        case 5:
+            printf("Delete funtion called\n");//text placeholder for now, real function will be added later.
+            break;
+        case 0:
+            printf("Exiting the program\n");//text placeholder for now, real function will be added later.
+            break;
+        default:
+            printf("Invalid choice! pls choose anything from 0-5\n");
+        }
+    }while(choice != 0);//keep showing menu until user chooses exit
+
     return 0;
 }
