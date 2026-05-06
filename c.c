@@ -96,7 +96,7 @@ void add()
 // this function is used for displaying the entered student's information. this will take place if the user takes the 2nd choice. it will show the information of the students that are on the record from the database (array of structure).
 void view()
 {
-    printf("\n--- View Student Records ---\n");
+    printf("\n--- View Student Records ---\n\n");
 
     if (count == 0)
     {
@@ -117,7 +117,7 @@ void view()
     }
 }
 
-// step - 6.A (Search funtion)
+// step - 6.A (Search function)
 
 void search()
 {
@@ -169,7 +169,7 @@ You say:“Using strstr() to check if the search key exists as a substring withi
     */
 }
 
-// step - 6.A (Edit funtion)
+// step - 6.B (Edit function)
 void editRecord()
 {
     char searchingKeyword[20];
@@ -220,6 +220,34 @@ void editRecord()
     }
 }
 
+// step - 6.C (deleteRecord function)
+void deleteRecord()
+{
+    char searchingKeyword[20];
+    int found = 0;
+    printf("Enter the name you want to delete : ");
+    scanf("%s", searchingKeyword);
+
+    for (int i = 0; i < count; i++)
+    {
+        if (strstr(d[i].name, searchingKeyword) != NULL)
+        {
+            // delete that element from the array. but you can’t actually remove an element. You can only overwrite it. overwriting the removed element by pulling everything after it one step toward the front.
+            for (int j = i; j < count - 1; j++)
+            {
+                d[j] = d[j + 1];
+            }
+            count--; // reducing the count since the element is being deleted.
+            i--;     // important (for some reason i dont understand yet lol)
+            found = 1;
+        }
+    }
+    if (found = 0)
+    {
+        printf("Sorry! No matching records found w such name.\n");
+    }
+}
+
 // main function
 int main()
 {
@@ -259,7 +287,7 @@ int main()
             editRecord(); // step - 6.B, calling the editRecord function
             break;
         case 5:
-            printf("Delete funtion called\n"); // text placeholder for now, real function will be added later.
+            deleteRecord();// step - 6.C, calling the deleteRecord function
             break;
         case 0:
             printf("Exiting the program.....\n");
