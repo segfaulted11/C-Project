@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-// step - 1 ()
+// step - 1 (Data Model (Structure + Array))
 
 // Structure (Blueprint of one record)
 struct Dorm
@@ -11,7 +11,7 @@ struct Dorm
     char name[50];
     int roomNumber;
     char checkInDate[20];
-    char paymentStatus[20]; // Paid / Unpaid
+    char paymentStatus[20];
 };
 
 // Array of structures (acts like database)
@@ -248,12 +248,88 @@ void deleteRecord()
     }
 }
 
+// Step - 7 File Handling (make your data permanent)
+
+/*
+
+Right now the system is like: Run program → add data → exit → everything gone
+
+Step 7 fixes that: Run program → load old data → work → save → exit → data stays
+
+Big idea ->
+
+You need TWO things:
+1. Save data → file (when program updates)
+2. Load data ← file (when program starts)
+
+Think of it like this ->
+Concept	Meaning
+Array   (d[])	RAM (temporary)
+File    (data.txt)	Storage (permanent)
+*/
+
+// Step - 7.A (Save to file)
+void saveToFile()
+{
+
+    FILE *fp;
+    int i;
+
+    fp = fopen("data.txt", "w");
+
+    for (i = 0; i < count; i++)
+    {
+        fprintf(fp, "%d %s %d %s %s\n",
+                d[i].studentID,
+                d[i].name,
+                d[i].roomNumber,
+                d[i].checkInDate,
+                d[i].paymentStatus);
+    }
+
+    fclose(fp);
+}
+// STEP 7B: Load from file
+void loadFromFile()
+{
+
+    FILE *fp;
+
+    fp = fopen("data.txt", "r");
+
+    if (fp == NULL)
+    {
+        return; // no file yet
+    }
+
+    while (fscanf(fp, "%d %s %d %s %s",
+                  &d[count].studentID,
+                  d[count].name,
+                  &d[count].roomNumber,
+                  d[count].checkInDate,
+                  d[count].paymentStatus) != EOF)
+    {
+
+        count++;
+    }
+
+    fclose(fp);
+}
+/*
+🧠 Key idea
+
+👉 It reads line by line and fills array again
+👉 Restores your “database”
+*/
+
 // main function
 int main()
 {
     int choice;
 
     login(); // step-2
+
+    loadFromFile(); // step-7 (load old data)
 
     // step -3 (Menu System)
 
@@ -265,7 +341,7 @@ int main()
     printf("Enter 3 to search students\n");
     printf("Enter 4 to edit students\n");
     printf("Enter 5 to delete students\n");
-    printf("Enter 6 to exit\n");
+    printf("Enter 0 to exit\n");
     do
     {
 
@@ -276,6 +352,7 @@ int main()
         {
         case 1:
             add(); // step - 4, calling the add function.
+            saveToFile();
             break;
         case 2:
             view(); // step - 5, calling the view function.
@@ -285,9 +362,11 @@ int main()
             break;
         case 4:
             editRecord(); // step - 6.B, calling the editRecord function
+            saveToFile();
             break;
         case 5:
-            deleteRecord();// step - 6.C, calling the deleteRecord function
+            deleteRecord(); // step - 6.C, calling the deleteRecord function
+            saveToFile();
             break;
         case 0:
             printf("Exiting the program.....\n");
