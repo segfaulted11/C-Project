@@ -214,7 +214,7 @@ void editRecord()
             printf("\n");
         }
     }
-    if (found = 0)
+    if (found == 0)
     {
         printf("Sorry! No matching records found w such name.\n");
     }
@@ -242,7 +242,7 @@ void deleteRecord()
             found = 1;
         }
     }
-    if (found = 0)
+    if (found == 0)
     {
         printf("Sorry! No matching records found w such name.\n");
     }
