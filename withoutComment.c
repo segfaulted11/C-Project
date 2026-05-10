@@ -4,7 +4,6 @@
 
 // step - 1 (Data Model (Structure + Array))
 
-// Structure (Blueprint of one record)
 struct Dorm
 {
     int studentID;
@@ -14,10 +13,8 @@ struct Dorm
     char paymentStatus[20];
 };
 
-// Array of structures (acts like database)
-struct Dorm d[100]; // array of structures. this array contains 100 structure instances as its element.
+struct Dorm d[100];
 
-// Count variable (tracks number of entered students)
 int count = 0;
 
 // step -2 (Login system)
@@ -40,38 +37,12 @@ void login()
         printf("Exiting program...\n");
         exit(0);
     }
-    /*
-    strcmp() → compares strings
-    == 0 → means strings are equal
-    != 0 -> mean they r not equal
-    exit(0) → force stop program
-    */
 }
 
 // step - 4 (add function)
-
-/* Goal ->
-Let the user:
-
-enter student info
-store it in the array of structure
-increase count
-
-Basically: “save new record”
-
-What does your add() function do? => “It takes user input and stores it into an array of structures, which acts as a temporary database.”
-
-Step 1 → create database
-Step 4 → insert data into database
-*/
-
 void add()
 {
     printf("\n--- Add Student ---\n");
-
-    //  d[count]  Means: “store data in next empty slot”
-    // If count = 0 → goes to d[0]
-    // If count = 1 → goes to d[1]
 
     printf("Enter Student ID: ");
     scanf("%d", &d[count].studentID);
@@ -84,16 +55,12 @@ void add()
     printf("Enter Payment Status: ");
     scanf("%s", d[count].paymentStatus);
 
-    count++; // 'count' tracks how many records are currently stored and ensures new data is added to the correct index in the array. the value of 'count' increases by 1 from its current value, everytime the 'add()' function is called.
-
-    // for the the first student array index(d[count==0].whatever) is 0 but count is 1, that means its going to be stored at index 0 as the first element of the array of structres and the 2nd student is going to be stored in the at index z as the second element. here index and count are different. right from the first student count gets updated to 0.
+    count++;
 
     printf("\nStudent added successfully!\n");
 }
 
 // step -5 (view function)
-
-// this function is used for displaying the entered student's information. this will take place if the user takes the 2nd choice. it will show the information of the students that are on the record from the database (array of structure).
 void view()
 {
     printf("\n--- View Student Records ---\n\n");
@@ -101,11 +68,10 @@ void view()
     if (count == 0)
     {
         printf("\nNo student has been recorded yet! Database is currently Empty! pls Enter a student first.\n");
-        return; // if no student is enterd yet then show this.
+        return;
     }
     for (int i = 0; i < count; i++)
     {
-
         printf("Record For Student - %d\n", i + 1);
         printf("Name : %s\n", d[i].name);
         printf("Student ID : %d\n", d[i].studentID);
@@ -118,7 +84,6 @@ void view()
 }
 
 // step - 6.A (Search function)
-
 void search()
 {
     char searchingKeyword[20];
@@ -148,25 +113,6 @@ void search()
     {
         printf("Sorry! No matching records found w such name.\n");
     }
-    /*
-//strstr() (THE STAR OF THIS STEP)
-strstr(d[i].name, searchingKeyword)
-Means:“Does this name contain the search text(searchingKeyword)?”
-
-Example:
-Name = "lokman"
-searchingKeyword = "man"
-strstr() finds "man" inside "lokman" → TRUE
-
-If not found:
-strstr(...) == NULL, means no match
-
-note : strstr() is case sensitive.
-
-If they ask:“How did you implement partial search?”
-
-You say:“Using strstr() to check if the search key exists as a substring within the stored names.”
-    */
 }
 
 // step - 6.B (Edit function)
@@ -190,7 +136,6 @@ void editRecord()
             printf("Check-In Date : %s\n", d[i].checkInDate);
             printf("Payment Status : %s\n", d[i].paymentStatus);
 
-            // take input again
             printf("\n--- Enter New Data ---\n");
 
             printf("Enter new name: ");
@@ -232,13 +177,12 @@ void deleteRecord()
     {
         if (strstr(d[i].name, searchingKeyword) != NULL)
         {
-            // delete that element from the array. but you can’t actually remove an element. You can only overwrite it. overwriting the removed element by pulling everything after it one step toward the front.
             for (int j = i; j < count - 1; j++)
             {
                 d[j] = d[j + 1];
             }
-            count--; // reducing the count since the element is being deleted.
-            i--;     // important (for some reason i dont understand yet lol)
+            count--;
+            i--;
             found = 1;
         }
     }
@@ -250,28 +194,9 @@ void deleteRecord()
 
 // Step - 7 File Handling (make your data permanent)
 
-/*
-
-Right now the system is like: Run program → add data → exit → everything gone
-
-Step 7 fixes that: Run program → load old data → work → save → exit → data stays
-
-Big idea ->
-
-You need TWO things:
-1. Save data → file (when program updates)
-2. Load data ← file (when program starts)
-
-Think of it like this ->
-Concept	Meaning
-Array   (d[])	RAM (temporary)
-File    (data.txt)	Storage (permanent)
-*/
-
 // Step - 7.A (Save to file)
 void saveToFile()
 {
-
     FILE *fp;
     int i;
 
@@ -289,17 +214,17 @@ void saveToFile()
 
     fclose(fp);
 }
+
 // STEP 7.B: Load from file
 void loadFromFile()
 {
-
     FILE *fp;
 
     fp = fopen("data.txt", "r");
 
     if (fp == NULL)
     {
-        return; // no file yet
+        return;
     }
 
     while (fscanf(fp, "%d %s %d %s %s",
@@ -309,20 +234,12 @@ void loadFromFile()
                   d[count].checkInDate,
                   d[count].paymentStatus) != EOF)
     {
-
         count++;
     }
 
     fclose(fp);
 }
-/*
-🧠 Key idea
 
-👉 It reads line by line and fills array again
-👉 Restores your “database”
-*/
-
-// main function
 int main()
 {
     int choice;
@@ -333,8 +250,6 @@ int main()
 
     // step -3 (Menu System)
 
-    // keeps running and lets the user choose actions
-
     printf("\n====== Dorm Room Management System ======\n");
     printf("Enter 1 to add students\n");
     printf("Enter 2 to view students\n");
@@ -344,7 +259,6 @@ int main()
     printf("Enter 0 to exit\n");
     do
     {
-
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
@@ -374,7 +288,7 @@ int main()
         default:
             printf("Invalid choice! pls choose anything from 0-5\n");
         }
-    } while (choice != 0); // keep showing menu until user chooses exit
+    } while (choice != 0);
 
     return 0;
 }
