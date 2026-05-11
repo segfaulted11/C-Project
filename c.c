@@ -17,7 +17,7 @@ struct Dorm
 // Array of structures (acts like database)
 struct Dorm d[100]; // array of structures. this array contains 100 structure instances as its element.
 
-// Count variable (tracks number of entered students)
+// Count variable (to count the number of students that has been added to the array so far)
 int count = 0;
 
 // step -2 (Login system)
@@ -53,23 +53,21 @@ void login()
 /* Goal ->
 Let the user:
 
-enter student info
-store it in the array of structure
-increase count
+enter student info -> store it in the array of structure -> increase count
 
 Basically: “save new record”
 
 What does your add() function do? => “It takes user input and stores it into an array of structures, which acts as a temporary database.”
 
-Step 1 → create database
-Step 4 → insert data into database
+Step 1 → creates database(array of structures)
+Step 4 → inserts data into that database
 */
 
 void add()
 {
     printf("\n--- Add Student ---\n");
 
-    //  d[count]  Means: “store data in next empty slot”
+    // d[count]  Means: “store data in next empty slot”
     // If count = 0 → goes to d[0]
     // If count = 1 → goes to d[1]
 
@@ -86,7 +84,7 @@ void add()
 
     count++; // 'count' tracks how many records are currently stored and ensures new data is added to the correct index in the array. the value of 'count' increases by 1 from its current value, everytime the 'add()' function is called.
 
-    // for the the first student array index(d[count==0].whatever) is 0 but count is 1, that means its going to be stored at index 0 as the first element of the array of structres and the 2nd student is going to be stored in the at index z as the second element. here index and count are different. right from the first student count gets updated to 0.
+    // for the the first student array index(d[count==0].whatever) is 0 but count becomes 1, that means its going to be stored at index 0 as the first element of the array of structres and the 2nd student is going to be stored in the at index 1 as the second element. here index and count are different. right from the first student count gets updated to 1.
 
     printf("\nStudent added successfully!\n");
 }
@@ -179,6 +177,7 @@ void editRecord()
     scanf("%s", searchingKeyword);
 
     printf("\n--- Search Results ---\n");
+
     for (int i = 0; i < count; i++)
     {
         if (strstr(d[i].name, searchingKeyword) != NULL)
@@ -225,6 +224,7 @@ void deleteRecord()
 {
     char searchingKeyword[20];
     int found = 0;
+
     printf("Enter the name you want to delete : ");
     scanf("%s", searchingKeyword);
 
@@ -237,7 +237,7 @@ void deleteRecord()
             {
                 d[j] = d[j + 1];
             }
-            count--; // reducing the count since the element is being deleted.
+            count--; // reducing the count since the a student is being deleted from the database.
             i--;     // important (for some reason i dont understand yet lol)
             found = 1;
         }
@@ -309,7 +309,6 @@ void loadFromFile()
                   d[count].checkInDate,
                   d[count].paymentStatus) != EOF)
     {
-
         count++;
     }
 
@@ -329,12 +328,10 @@ int main()
 
     login(); // step-2
 
-    loadFromFile(); // step-7 (load old data)
+    loadFromFile(); // step-7.B (load old data)
 
     // step -3 (Menu System)
-
-    // keeps running and lets the user choose actions
-
+    
     printf("\n====== Dorm Room Management System ======\n");
     printf("Enter 1 to add students\n");
     printf("Enter 2 to view students\n");
@@ -342,6 +339,8 @@ int main()
     printf("Enter 4 to edit students\n");
     printf("Enter 5 to delete students\n");
     printf("Enter 0 to exit\n");
+    
+    // keeps running and lets the user choose actions
     do
     {
 
@@ -352,7 +351,7 @@ int main()
         {
         case 1:
             add();        // step - 4, calling the add function.
-            saveToFile(); // step - 7.B
+            saveToFile(); // step - 7.A
             break;
         case 2:
             view(); // step - 5, calling the view function.
@@ -362,11 +361,11 @@ int main()
             break;
         case 4:
             editRecord(); // step - 6.B, calling the editRecord function
-            saveToFile(); // step - 7.B
+            saveToFile(); // step - 7.A
             break;
         case 5:
             deleteRecord(); // step - 6.C, calling the deleteRecord function
-            saveToFile();   // step - 7.B
+            saveToFile();   // step - 7.A
             break;
         case 0:
             printf("Exiting the program.....\n");

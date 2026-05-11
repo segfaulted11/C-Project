@@ -246,7 +246,7 @@ int main()
 
     login(); // step-2
 
-    loadFromFile(); // step-7 (load old data)
+    loadFromFile(); // step-7.B (load old data)
 
     // step - 3 (Menu System)
 
@@ -266,7 +266,7 @@ int main()
         {
         case 1:
             add();        // step - 4, calling the add function.
-            saveToFile(); // step - 7.B
+            saveToFile(); // step - 7.A
             break;
         case 2:
             view(); // step - 5, calling the view function.
@@ -276,11 +276,11 @@ int main()
             break;
         case 4:
             editRecord(); // step - 6.B, calling the editRecord function
-            saveToFile(); // step - 7.B
+            saveToFile(); // step - 7.A
             break;
         case 5:
             deleteRecord(); // step - 6.C, calling the deleteRecord function
-            saveToFile();   // step - 7.B
+            saveToFile();   // step - 7.A
             break;
         case 0:
             printf("Exiting the program.....\n");
