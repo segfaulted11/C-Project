@@ -17,7 +17,7 @@ struct Dorm d[100];
 
 int count = 0;
 
-// step -2 (Login system)
+// step - 2 (Login system)
 void login()
 {
     char userName[20];
@@ -60,7 +60,7 @@ void add()
     printf("\nStudent added successfully!\n");
 }
 
-// step -5 (view function)
+// step - 5 (view function)
 void view()
 {
     printf("\n--- View Student Records ---\n\n");
@@ -159,7 +159,7 @@ void editRecord()
             printf("\n");
         }
     }
-    if (found = 0)
+    if (found == 0)
     {
         printf("Sorry! No matching records found w such name.\n");
     }
@@ -186,7 +186,7 @@ void deleteRecord()
             found = 1;
         }
     }
-    if (found = 0)
+    if (found == 0)
     {
         printf("Sorry! No matching records found w such name.\n");
     }
@@ -215,7 +215,7 @@ void saveToFile()
     fclose(fp);
 }
 
-// STEP 7.B: Load from file
+// STEP 7.B (Load from file)
 void loadFromFile()
 {
     FILE *fp;
@@ -248,7 +248,7 @@ int main()
 
     loadFromFile(); // step-7 (load old data)
 
-    // step -3 (Menu System)
+    // step - 3 (Menu System)
 
     printf("\n====== Dorm Room Management System ======\n");
     printf("Enter 1 to add students\n");
